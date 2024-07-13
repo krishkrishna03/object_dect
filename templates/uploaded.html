@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <title>Detection Results</title>
+    <link rel='stylesheet' href='{{ url_for("static", filename="style.css") }}'>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Detection Results</h1>
+        </div>
+    </header>
+    <div class="container">
+        {% if filename.endswith(('mp4', 'avi', 'mov')) %}
+            <h2>Annotated Video with Detection Results:</h2>
+            <video controls>
+                <source src='{{ url_for("static", filename="results/" + filename) }}' type='video/mp4'>
+                Your browser does not support the video tag.
+            </video>
+            <br><br>
+            <h2>Plain Video for Playback:</h2>
+            <video controls>
+                <source src='{{ url_for("static", filename="results/" + plain_filename) }}' type='video/mp4'>
+                Your browser does not support the video tag.
+            </video>
+        {% else %}
+            <img src='{{ url_for("static", filename="results/" + filename) }}' alt='Detection Results'>
+        {% endif %}
+        <h2>Detected Objects:</h2>
+        <ul>
+            {% for object in objects %}
+                <li>{{ object }}</li>
+            {% endfor %}
+        </ul>
+        <br><br>
+        <a href='/' class="button">Upload Another File</a>
+    </div>
+</body>
+</html>
